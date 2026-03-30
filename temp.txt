@@ -1,0 +1,27 @@
+Epoch [10/200] Train Loss: 1.2710, Train Acc: 66.34% | Val Loss: 1.3835, Val Acc: 64.44%
+
+========================================
+Evaluating PointNet...
+========================================
+Performance Metrics:
+  - Overall Accuracy: 14.52%
+  - Macro F1 Score:   0.1272
+
+Efficiency Metrics:
+  - Parameters:       3.46 M
+  - Inference Time:   0.49 ms / sample
+  - FPS:              2038.52 frames / second
+
+
+
+========================================
+Evaluating DGCNN...
+========================================
+Performance Metrics:
+  - Overall Accuracy: 62.20%
+  - Macro F1 Score:   0.6112
+
+Efficiency Metrics:
+  - Parameters:       1.80 M
+  - Inference Time:   0.14 ms / sample
+  - FPS:              7037.81 frames / second
