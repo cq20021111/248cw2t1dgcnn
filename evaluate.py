@@ -20,7 +20,7 @@ class Config:
     
     # Paths to saved weights
     pointnet_path = os.path.join(_src_dir, 'weights', 'pointnet')
-    dgcnn_path = os.path.join(_src_dir, 'weights', 'DGCNN', 'best_dgcnn.pth')
+    dgcnn_path = os.path.join(_src_dir, 'weights', 'DGCNN', 'best_dgcnn61.pth')
     
     batch_size = 24
     num_points = 2048
@@ -96,7 +96,9 @@ def evaluate_model(model, loader, device, model_name, results_dir):
             all_labels.extend(labels.cpu().numpy())
             
     # Calculate Metrics
+    # For single-label classification, overall top-1 accuracy equals overall accuracy.
     acc = np.mean(np.array(all_preds) == np.array(all_labels))
+    top1_acc = acc
     macro_f1 = f1_score(all_labels, all_preds, average='macro')
     
     # Calculate Efficiency
@@ -104,13 +106,14 @@ def evaluate_model(model, loader, device, model_name, results_dir):
     fps = 1.0 / (total_inference_time / num_samples)
     num_params = count_parameters(model)
     
-    print(f"Performance Metrics:")
-    print(f"  - Overall Accuracy: {acc*100:.2f}%")
+    print(f"Evaluate performance:")
+    print(f"  - Overall Top-1 Accuracy: {top1_acc*100:.2f}%")
     print(f"  - Macro F1 Score:   {macro_f1:.4f}")
-    print(f"\nEfficiency Metrics:")
-    print(f"  - Parameters:       {num_params / 1e6:.2f} M")
+    print(f"\nComputational efficiency:")
     print(f"  - Inference Time:   {avg_inference_time_ms:.2f} ms / sample")
     print(f"  - FPS:              {fps:.2f} frames / second")
+    print(f"\nMemory footprint:")
+    print(f"  - Parameters:       {num_params / 1e6:.2f} M")
     
     # Save Confusion Matrix
     os.makedirs(results_dir, exist_ok=True)
@@ -125,6 +128,7 @@ def evaluate_model(model, loader, device, model_name, results_dir):
     
     return {
         'acc': acc,
+        'top1_acc': top1_acc,
         'f1': macro_f1,
         'params_M': num_params / 1e6,
         'fps': fps

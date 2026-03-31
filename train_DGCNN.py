@@ -17,14 +17,13 @@ class Config:
     # Training hyperparameters
     epochs = 200         # Total number of training epochs
     batch_size = 24      # Batch size (DGCNN uses more memory than PointNet, may need smaller batch size)
-    lr = 0.0004           # Learning rate
+    lr = 0.0008           # Learning rate
     val_split = 0.15     # Validation set ratio
     num_points = 2048    # Number of points to sample per point cloud
     k = 20               # Number of nearest neighbors for DGCNN EdgeConv
     
     # Early Stopping parameters
     patience = 20        # Number of epochs to tolerate no decrease in validation loss
-    min_delta = 0.0005   # Minimum threshold for validation loss decrease
     
     # Resume training flag
     resume = True       
